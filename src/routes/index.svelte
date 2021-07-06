@@ -12,7 +12,7 @@
 </Container>
 
 <!-- TODO: Weer -->
-<Weer></Weer>
+<!-- <Weer></Weer> -->
 <!-- TODO: Snelle links -->
 
 <!-- TODO: Nieuws -->

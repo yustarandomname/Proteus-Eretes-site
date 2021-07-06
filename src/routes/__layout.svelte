@@ -1,17 +1,16 @@
 <script lang="ts">
   import Popup from "$lib/components/Popup.svelte"
   import Input from "$lib/components/forms/Input.svelte"
+  import {sveltesupa, Auth} from "sveltesupa"
+  import {SUPABASE_URL, SUPABASE_KEY} from "$lib/logic/secrets"
 
-  interface User {
-    id: string
-    email: string
-    profile: string
-  }
-
-  let user: User | false = false;
+  sveltesupa.init({url: SUPABASE_URL, key: SUPABASE_KEY});
 
   let loginVisible: boolean = false;
+  let userDropdown: boolean = false
   let email: string, password: string;
+
+  let user;
 </script>
 
 <style>
@@ -24,6 +23,7 @@
     background: url(./assets/proteuslogo.svg);
     background-size: contain;
     background-repeat: no-repeat;
+    cursor: pointer;
     z-index: 100;
   }
 
@@ -51,31 +51,33 @@
   }
 </style>
 
-<div class="logo"></div>
+<a href="/" class="logo"> </a>
 
 <nav>
-  {#if user}
-    <div class="primary-color">zoeken</div>
-    <a href="./leden-panel">leden panel</a>
-    <img src="{user.profile}" alt="user profile">
-  {:else}
-    <a href="./lid-worden" class="bold secondary-color">Lid worden</a>
-    <div class="primary-color" on:click={() => {loginVisible = true}}>Log in</div>
-  {/if}
+  <!-- <Auth {sveltesupa} let:user let:signIn let:signOut> -->
+    {#if user}
+      <div class="primary-color">zoeken</div>
+      <a href="./leden-panel">leden panel</a>
+      <img src="{user.profile}" alt="user profile" on:click={() => userDropdown = !userDropdown} />
+    {:else}
+      <a href="./lid-worden" class="bold secondary-color">Lid worden</a>
+      <div class="primary-color" on:click={() => {loginVisible = true}}>Log in</div>
+    {/if}
+
+    <!-- LOGIN POPUP -->
+    <Popup bind:visible={loginVisible}>
+      <h1>Login</h1>
+
+      <form on:submit|preventDefault={() => console.log("login")}>
+        <Input type="email" bind:value={email}/>
+        <Input type="password" bind:value={password}/>
+        <Input type="submit" value="Login" />
+        <div class="link light-color" on:click={() => console.log("forgot password")}>wachtwoord vergeten</div>
+      </form>
+    </Popup>
+  <!-- </Auth> -->
 </nav>
 
 <div class="wrapper">
   <slot></slot>
 </div>
-
-<!-- LOGIN POPUP -->
-<Popup bind:visible={loginVisible}>
-  <h1>Login</h1>
-
-  <form on:submit|preventDefault={() => console.log("submit login")}>
-    <Input type="email" bind:value={email}/>
-    <Input type="password" bind:value={password}/>
-    <Input type="submit" value="Login" />
-    <div class="link light-color" on:click={() => console.log("forgot password")}>wachtwoord vergeten</div>
-  </form>
-</Popup>
