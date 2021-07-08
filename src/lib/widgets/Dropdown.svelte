@@ -32,7 +32,6 @@
   <div class="positionDropdown">
     <Container>
       <div class="actions">
-        <div on:click={() => console.log("zoeken")}>zoeken</div>
         <a href="./leden-lijst">leden lijst</a>
         <a href="./afschrijven">afschrijven</a>
         <a href="./schadeboek">schadeboek</a>

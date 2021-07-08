@@ -1,5 +1,7 @@
 <script>
   import Container from "$lib/components/Container.svelte";
+  import Grid from "$lib/components/Grid.svelte"
+  import GridItem from "$lib/components/GridItem.svelte"
   import Weer from "$lib/widgets/Weer.svelte"
 </script>
 
@@ -11,8 +13,24 @@
   --background="url(https://proteus-eretes.nl/fotodir/9/9719466455379747209036022605006758121769484342551754858607478390_l.jpg)">
 </Container>
 
-<!-- TODO: Weer -->
+<!-- Weer -->
 <Weer></Weer>
+
 <!-- TODO: Snelle links -->
+<Grid header="Snelle links">
+  <GridItem title="Contact" icon="at-outline" link="./contact" />
+  <GridItem title="Info" icon="information-outline" link="./info" />
+  <GridItem title="Diensten" icon="videocam-outline" link="./diensten" />
+  <GridItem title="Evenementen" icon="ticket-outline" link="./evenementen" />
+</Grid>
 
 <!-- TODO: Nieuws -->
+<Container header="Nieuws" link={{title:"Filter", action: () => console.log("filter")}} --height="15em">
+  <h3>Hier komt het laatste nieuws als infinite scrollable lijst</h3>
+</Container>
+
+{#each new Array(10) as _}
+  <Container --height="15em">
+    <h3>Hier komt het laatste nieuws als infinite scrollable lijst</h3>
+  </Container>
+{/each}
