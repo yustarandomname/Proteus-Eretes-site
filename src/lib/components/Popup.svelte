@@ -20,6 +20,7 @@
     height: 100vh;
     width: 100vw;
     background: rgba(0, 0, 0, 0.3);
+    z-index: 50;
   }
 
   .inside {
@@ -34,6 +35,7 @@
     min-height: var(--size, 25em);
     max-height: 90vh;
     transform: translate(-50%, -50%);
+    z-index: 50;
   }
 
   .closeButton {

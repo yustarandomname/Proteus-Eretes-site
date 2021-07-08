@@ -9,7 +9,13 @@
   import Input from "$lib/components/forms/Input.svelte"
   import Popup from "$lib/components/Popup.svelte"
   import Dropdown from "$lib/widgets/Dropdown.svelte"
-  
+
+  async function resetPassword() {
+    const {data, error} = await $supabase.auth.api.resetPasswordForEmail(email, {redirectTo: "localhost:3000/reset-password"})
+
+    //TODO: send feedback to user
+  }
+
   supabase.init(SUPABASE_URL, SUPABASE_KEY);
   user.set($supabase.auth.user())
 
@@ -107,7 +113,7 @@
     <Input type="email" bind:value={email}/>
     <Input type="password" bind:value={password}/>
     <Input type="submit" value="Login" />
-    <div class="link light-color" on:click={() => console.log("forgot password")}>wachtwoord vergeten</div>
+    <div class="link light-color" on:click={resetPassword}>wachtwoord vergeten</div>
   </form>
 </Popup>
 
