@@ -6,19 +6,20 @@ interface User {
   name: string,
   surname: string,
   street: string,
-  streetnumber: string,
-  streetzip: string,
+  street_number?: number,
+  street_zip: string,
   city: string,
-  bank: string,
-  phone: string,
+  bank_abbriviated: string,
+  phone: number,
   phonePublic: boolean
-  profile: string
+  sport_card?: number
 }
 
 const getSupabase = () => get(supabase)
 
-export const getUser = async (uid: string, select?: string, ) => {
-  return getSupabase().from<User>("Users").select(select).eq("userid", uid)
+export const getUser = async (uid: string, select?: string, ): Promise<User> => {
+  const {data} = await getSupabase().from<User>("Users").select(select).eq("userid", uid).single()
+  return data
 }
 
 export const signIn = async (email: string, password: string) => {
