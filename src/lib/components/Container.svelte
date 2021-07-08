@@ -13,7 +13,7 @@
 
 <style>
   .container {
-    width: var(--width, calc(51.5em - 2 * var(--padding, 0.75em)));
+    width: var(--width, calc(50em - 2 * var(--padding, 0.75em)));
     max-width: calc(90vw - 2 * var(--padding, 0.75em));
     min-height: 2.5em;
     height: var(--height, auto);
@@ -36,7 +36,7 @@
   }
 
   .header {
-    margin-top: 2em;
+    margin-top: 3em;
   }
 
   .positionLinks {

@@ -9,6 +9,7 @@
   import Input from "$lib/components/forms/Input.svelte"
   import Popup from "$lib/components/Popup.svelte"
   import Dropdown from "$lib/widgets/Dropdown.svelte"
+  import Zoeken from "$lib/widgets/Zoeken.svelte"
 
   async function resetPassword() {
     const {data, error} = await $supabase.auth.api.resetPasswordForEmail(email, {redirectTo: "localhost:3000/reset-password"})
@@ -25,6 +26,7 @@
 
   let loginVisible: boolean = false;
   let userDropdown: boolean = false;
+  let zoekenVisible: boolean = false;
   
   let email: string, password: string;
 </script>
@@ -80,7 +82,7 @@
 
 <nav>
   {#if $user}
-    <div class="primary-color">zoeken</div>
+    <div class="primary-color" on:click={() => {zoekenVisible = true; userDropdown = false}}>zoeken</div>
     <a href="./leden-panel">leden panel</a>
 
     <div class="avatar">
@@ -95,6 +97,9 @@
 
       <!-- DROPDOWN -->
       <Dropdown bind:visible={userDropdown} />
+
+      <!-- ZOEKEN -->
+      <Zoeken bind:visible={zoekenVisible} />
     </div>
   {:else}
     <a href="./lid-worden" class="bold secondary-color">Lid worden</a>
