@@ -19,6 +19,7 @@ body {
 a {
   color: var(--primary);
   text-decoration: none;
+  display: block;
 }
 a:visited {color: var(--primary-accent)}
 

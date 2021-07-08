@@ -29,9 +29,9 @@
     background: white;
     padding: 1em;
     border-radius: 0.75em;
-    width: 20em;
+    width: var(--size, 25em);
     max-width: 90vw;
-    min-height: 20em;
+    min-height: var(--size, 25em);
     max-height: 90vh;
     transform: translate(-50%, -50%);
   }
@@ -50,7 +50,7 @@
 
   <div class="inside">
     <div class="closeButton" on:click={close}>
-      <Icon name="close-circle-outline" />
+      <Icon --size="2.5em" name="close-circle-outline" />
     </div>
     <slot />
   </div>

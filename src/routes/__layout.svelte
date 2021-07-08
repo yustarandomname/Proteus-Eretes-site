@@ -1,16 +1,26 @@
 <script lang="ts">
-  import Popup from "$lib/components/Popup.svelte"
-  import Input from "$lib/components/forms/Input.svelte"
-  import {sveltesupa, Auth} from "sveltesupa"
   import {SUPABASE_URL, SUPABASE_KEY} from "$lib/logic/secrets"
+  import supabase from "$lib/logic/supabaseStore"
+  import user from "$lib/logic/userStore"
+  import { signIn } from "$lib/logic/DBuser"
+  import { getProfile } from "$lib/logic/DBphotos"
 
-  sveltesupa.init({url: SUPABASE_URL, key: SUPABASE_KEY});
+  import AsyncImage from "$lib/components/AsyncImage.svelte"
+  import Input from "$lib/components/forms/Input.svelte"
+  import Popup from "$lib/components/Popup.svelte"
+  import Dropdown from "$lib/widgets/Dropdown.svelte"
+  
+  supabase.init(SUPABASE_URL, SUPABASE_KEY);
+  user.set($supabase.auth.user())
+
+  $supabase.auth.onAuthStateChange((_, session) => {
+    user.set(session?.user)
+  })
 
   let loginVisible: boolean = false;
-  let userDropdown: boolean = false
+  let userDropdown: boolean = false;
+  
   let email: string, password: string;
-
-  let user;
 </script>
 
 <style>
@@ -28,7 +38,7 @@
   }
 
   .wrapper {
-    margin-top:4.5em
+    padding-top:4.5em
   }
 
   nav {
@@ -49,35 +59,59 @@
     margin: 0.5em;
     user-select: none;
   }
+
+  /* AVATAR */
+  .avatar {
+    width: 2em;
+    height: 2em;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 0em !important;
+  }
 </style>
 
 <a href="/" class="logo"> </a>
 
 <nav>
-  <!-- <Auth {sveltesupa} let:user let:signIn let:signOut> -->
-    {#if user}
-      <div class="primary-color">zoeken</div>
-      <a href="./leden-panel">leden panel</a>
-      <img src="{user.profile}" alt="user profile" on:click={() => userDropdown = !userDropdown} />
-    {:else}
-      <a href="./lid-worden" class="bold secondary-color">Lid worden</a>
-      <div class="primary-color" on:click={() => {loginVisible = true}}>Log in</div>
-    {/if}
+  {#if $user}
+    <div class="primary-color">zoeken</div>
+    <a href="./leden-panel">leden panel</a>
 
-    <!-- LOGIN POPUP -->
-    <Popup bind:visible={loginVisible}>
-      <h1>Login</h1>
+    <div class="avatar">
+      <AsyncImage 
+        promise={getProfile($user.id)} 
+        dummySrc="./assets/dummyfoto.jpg" 
+        alt="user profile" 
+        --height="2em"
+        --width="2em"
+        on:click={() => userDropdown = !userDropdown} 
+      />
 
-      <form on:submit|preventDefault={() => console.log("login")}>
-        <Input type="email" bind:value={email}/>
-        <Input type="password" bind:value={password}/>
-        <Input type="submit" value="Login" />
-        <div class="link light-color" on:click={() => console.log("forgot password")}>wachtwoord vergeten</div>
-      </form>
-    </Popup>
-  <!-- </Auth> -->
+      <!-- DROPDOWN -->
+      <Dropdown bind:visible={userDropdown} />
+    </div>
+  {:else}
+    <a href="./lid-worden" class="bold secondary-color">Lid worden</a>
+    <div class="primary-color" on:click={() => {loginVisible = true}}>Log in</div>
+  {/if}
 </nav>
+
+<!-- LOGIN POPUP -->
+<Popup bind:visible={loginVisible}>
+  <h1>Login</h1>
+
+  <form on:submit|preventDefault={async () => {
+    const {error} = await signIn(email, password)
+    if (!error) loginVisible = false
+    }}>
+    <Input type="email" bind:value={email}/>
+    <Input type="password" bind:value={password}/>
+    <Input type="submit" value="Login" />
+    <div class="link light-color" on:click={() => console.log("forgot password")}>wachtwoord vergeten</div>
+  </form>
+</Popup>
 
 <div class="wrapper">
   <slot></slot>
 </div>
+
