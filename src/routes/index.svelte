@@ -5,7 +5,7 @@
 
 <!-- TODO: fetch fotos, scroll through fotos -->
 <Container header="Foto's" link={{title: "Meer foto's", href:"/fotos"}} 
-  --padding="0" 
+  --padding="0em" 
   --height="22.5em" 
   --border="none"
   --background="url(https://proteus-eretes.nl/fotodir/9/9719466455379747209036022605006758121769484342551754858607478390_l.jpg)">

@@ -13,8 +13,9 @@
     width: var(--width, -webkit-fill-available);
     border-radius: 0.5em;
     border: 1px solid var(--light);
-    padding: 0.5em;
+    padding: var(--padding, 1em);
     margin-top: 1em;
+    font-size: 1em;
     background: white;
   }
 

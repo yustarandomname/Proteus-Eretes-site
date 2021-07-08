@@ -4,7 +4,8 @@
 
 <style>
   .icon {
-    font-size: var(--size, 1em);
+    width: var(--size, 1em);
+    height: var(--size, 1em);
   }
 </style>
 
