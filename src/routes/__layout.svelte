@@ -38,7 +38,7 @@
     left: 1em;
     height: 2.5em;
     width: 17em;
-    background: url(./assets/proteuslogo.svg);
+    background: url(./assets/proteuslogo.png);
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -75,6 +75,13 @@
     overflow: hidden;
     border-radius: 50%;
     margin: 0em !important;
+  }
+  @media screen and (max-width: 600px) {
+    .logo {
+      background: url(./assets/proteuslogo-mobile.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
   }
 </style>
 

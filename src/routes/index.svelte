@@ -19,10 +19,15 @@
 <!-- TODO: Snelle links -->
 <Grid header="Snelle links">
   <GridItem title="Contact" icon="at-outline" link="./contact" />
-  <GridItem title="Info" icon="information-outline" link="./info" />
+  <GridItem title="Info" icon="information-outline" link="./lid-worden" />
   <GridItem title="Diensten" icon="videocam-outline" link="./diensten" />
   <GridItem title="Evenementen" icon="ticket-outline" link="./evenementen" />
 </Grid>
+
+<!-- TODO: Partners -->
+<Container header="Partners" link={{title:"Partners", href: "./partners"}}>
+  <h3>Hier komen alle partners naast elkaar te staan</h3>
+</Container>
 
 <!-- TODO: Nieuws -->
 <Container header="Nieuws" link={{title:"Filter", action: () => console.log("filter")}} --height="15em">

@@ -26,6 +26,12 @@
   .header {
     margin-top: 3em;
   }
+
+  @media screen and (max-width: 600px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
 </style>
 
 <div class="grid" class:header={header} class:footer data-header={header} data-footer={footer}>

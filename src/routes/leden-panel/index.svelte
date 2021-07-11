@@ -13,11 +13,7 @@
 <style>
   .profileGrid{
     display: flex;
-  }
-
-  .profile {
-    overflow: hidden;
-    border-radius: 0.5em;
+    --width: 13.75em;
   }
 
   .info {
@@ -26,18 +22,30 @@
 
   .larger-text {font-size:1.2em}
   .small-text {font-size: 0.8em;}
+
+  @media screen and (max-width: 600px) {
+    .profileGrid {
+      flex-direction: column;
+      --width: 100%;
+    }
+
+    .info {
+      width: 100%;
+      margin: 1em 0 0 0;
+    }
+  } 
 </style>
 
 {#if $user}
   <Container header="Profiel" link={{href: "/leden-panel/wijzig", title: "Wijzig"}}>
     <div class="profileGrid">
-      <div class="profile">
+      <!-- <div class="profile"> -->
         <AsyncImage 
           promise={getProfile($user.id)} 
           dummySrc="./assets/dummyfoto.jpg"
           alt="profile" 
-          --height="13.75em" --width="13.75em" />   
-      </div>
+          --height="13.75em" --radius="0.5em" />   
+      <!-- </div> -->
 
       <div class="info">
         <div class="primary-color bold larger-text">Persoonlijk</div>
@@ -67,8 +75,8 @@
 
   <Grid header="Snelle links">
     <GridItem title="Afschrijven" icon="pencil-outline" link="./afschrijven" />
-    <GridItem title="Leden lijst" icon="people-outline" link="./leden-lijst" />
-    <GridItem title="Eet lijst" icon="pizza-outline" link="./eet-lijst" />
+    <GridItem title="Ledenlijst" icon="people-outline" link="./ledenlijst" />
+    <GridItem title="Eetlijst" icon="pizza-outline" link="./eetlijst" />
     <GridItem title="Schadeboek" icon="warning-outline" link="./schadeboek" />
     <GridItem title="Contact" icon="at-outline" link="./contact" />
     <GridItem title="Info" icon="information-outline" link="./info" />
@@ -92,7 +100,7 @@
     <GridItem title="Hoe veilig varen?" icon="help-buoy-outline" link="./intern/hoe-veilig-varen" />
     <GridItem title="Meerjaren plan" icon="clipboard-outline" link="./intern/meerjaren-plan" />
     <GridItem title="Roosters" icon="cafe-outline" link="./intern/roosters" />
-    <GridItem title="Huis stijl" icon="color-palette-outline" link="./intern/huis-stijl" />
+    <GridItem title="Huisstijl" icon="color-palette-outline" link="./intern/huisstijl" />
     <GridItem title="Regelementen" icon="reader-outline" link="./intern/regelementen" />
     <GridItem title="Het venster" icon="book-outline" link="./intern/het-venster" />
   </Grid>

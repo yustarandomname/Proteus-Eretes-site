@@ -23,6 +23,10 @@ a {
 }
 a:visited {color: var(--primary-accent)}
 
+.inline {
+  display: inline-block;
+}
+
 .link {
   color: var(--primary);
   cursor: pointer;

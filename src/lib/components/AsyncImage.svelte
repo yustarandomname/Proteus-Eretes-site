@@ -8,6 +8,7 @@
   .img {
     height: var(--height,15em);
     width: var(--width, auto);
+    border-radius: var(--radius, 0);
     background-size: var(--size, cover) !important;
     background-position: var(--position, center center) !important;
     background-repeat: no-repeat !important;
