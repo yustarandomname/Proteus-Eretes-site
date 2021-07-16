@@ -55,7 +55,7 @@
   }
 </style>
 
-<div class="container" class:header={header || link?.title} class:footer data-header={header} data-footer={footer}>
+<div id={header.replace(/\s/g, '-')} class="container" class:header={header || link?.title} class:footer data-header={header} data-footer={footer}>
   {#if link || links.length}
     <div class="positionLinks">
       {#if link?.action}

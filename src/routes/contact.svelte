@@ -1,7 +1,9 @@
 <script>
   import Container from '$lib/components/Container.svelte'
 
+  import navigationStore from '$lib/logic/navigationStore'
 
+  navigationStore.set(["Bestuur", "Financieel", "Adres", "Wettelijk", "Commissies"])
 </script>
 
 <Container header="Bestuur">
@@ -18,7 +20,7 @@
   <a href="mailto: tbeheer.secretaris@proteus-eretes.nl">tbeheer.secretaris@proteus-eretes.nl</a><br> 
 </Container>
 
-<Container header="Finacieel">
+<Container header="Financieel">
   Voor vragen over de contributie of facturen kunt u contact opnemen met <a class="inline" href="mailto: penningmeester@proteus-eretes.nl">penningmeester@proteus-eretes.nl</a>.
 
   <h3>Rekeninginformatie</h3>
@@ -58,7 +60,7 @@
   803836260<br><br>
 </Container>
 
-<Container header="Commisssies">
+<Container header="Commissies">
   <div class="bold">LUCIE (Lustrum commisssie)</div>
   <a class="inline" href="mailto: webcie@proteus-eretes.nl">	lustrum@proteus-eretes.nl</a> of <a class="inline" href="proteus-eretes.nl/lustrum">proteus-eretes.nl/lustrum</a><br><br>
 

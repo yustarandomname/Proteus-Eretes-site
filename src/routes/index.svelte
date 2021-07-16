@@ -3,10 +3,13 @@
   import Grid from "$lib/components/Grid.svelte"
   import GridItem from "$lib/components/GridItem.svelte"
   import Weer from "$lib/widgets/Weer.svelte"
+  import navigationStore from '$lib/logic/navigationStore'
+
+  navigationStore.set(["Fotos","Weer", "Snelle links", "Partners", "Nieuws"])
 </script>
 
 <!-- TODO: fetch fotos, scroll through fotos -->
-<Container header="Foto's" link={{title: "Meer foto's", href:"/fotos"}} 
+<Container header="Fotos" link={{title: "Meer foto's", href:"/fotos"}} 
   --padding="0em" 
   --height="22.5em" 
   --border="none"

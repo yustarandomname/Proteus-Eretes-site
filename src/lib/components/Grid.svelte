@@ -34,6 +34,6 @@
   }
 </style>
 
-<div class="grid" class:header={header} class:footer data-header={header} data-footer={footer}>
+<div id={header.replace(/\s/g, '-')} class="grid" class:header={header} class:footer data-header={header} data-footer={footer}>
   <slot />
 </div>
