@@ -18,6 +18,43 @@
 
 </script>
 
+<style>
+    nav {
+    position:fixed;
+    right: 1em;
+    top: 1em;
+    border: 1px solid var(--light);
+    border-radius: 0.75em;
+    padding: 0.25em;
+    display: flex;
+    font-size: 1em;
+    z-index: 100;
+    background:white
+  }
+
+  nav > * {
+    cursor: pointer;
+    margin: 0.5em;
+    user-select: none;
+  }
+
+  /* AVATAR */
+  .avatar {
+    width: 2em;
+    height: 2em;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 0em !important;
+  }
+  @media screen and (max-width: 600px) {
+    .logo {
+      background: url(./assets/proteuslogo-mobile.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+</style>
+
 <nav>
   {#if user}
     <div class="primary-color" on:click={() => {zoekenVisible = true; userDropdown = false}}>zoeken</div>
