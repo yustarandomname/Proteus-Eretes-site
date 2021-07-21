@@ -38,7 +38,7 @@
     left: 1em;
     height: 2.5em;
     width: 17em;
-    background: url(./assets/proteuslogo.png);
+    background: url(/assets/proteuslogo.png);
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;
@@ -78,7 +78,7 @@
   }
   @media screen and (max-width: 600px) {
     .logo {
-      background: url(./assets/proteuslogo-mobile.png);
+      background: url(/assets/proteuslogo-mobile.png);
       background-size: contain;
       background-repeat: no-repeat;
     }
@@ -90,12 +90,12 @@
 <nav>
   {#if $user}
     <div class="primary-color" on:click={() => {zoekenVisible = true; userDropdown = false}}>zoeken</div>
-    <a href="./leden-panel">leden panel</a>
+    <a href="/leden-panel">leden panel</a>
 
     <div class="avatar">
       <AsyncImage 
         promise={getProfile($user.id)} 
-        dummySrc="./assets/dummyfoto.jpg" 
+        dummySrc="/assets/dummyfoto.jpg" 
         alt="user profile" 
         --height="2em"
         --width="2em"
@@ -109,7 +109,7 @@
       <Zoeken bind:visible={zoekenVisible} />
     </div>
   {:else}
-    <a href="./lid-worden" class="bold secondary-color">Lid worden</a>
+    <a href="/lid-worden" class="bold secondary-color">Lid worden</a>
     <div class="primary-color" on:click={() => {loginVisible = true}}>Log in</div>
   {/if}
 </nav>
