@@ -1,0 +1,88 @@
+<template>
+  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
+  </div>
+  <router-view />
+</template>
+
+<style>
+#nav {
+  text-align: center;
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#nav a.router-link-exact-active {
+  color: #42b983;
+}
+
+:root {
+  --base: white;
+  --primary: #0058a9;
+  --primary-accent: #0278e6; /* Used for instance with clicked navigation links*/
+  --secondary: #f57f38;
+  --light: #797979;
+
+  --red: #f00;
+  --red-light: rgb(250, 165, 165);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* DEFAULT STYLES */
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  display: block;
+}
+a:visited {
+  color: var(--primary-accent);
+}
+
+.inline {
+  display: inline-block;
+}
+
+.link {
+  color: var(--primary);
+  cursor: pointer;
+}
+
+/* COLORS */
+.primary-color {
+  color: var(--primary);
+}
+.secondary-color {
+  color: var(--secondary);
+}
+.light-color {
+  color: var(--light);
+}
+
+.primary-background {
+  background: var(--primary);
+}
+.secondary-background {
+  background: var(--secondary);
+}
+.red-background {
+  background: var(--red);
+}
+.red-light-background {
+  background: var(--red-light);
+}
+
+/* FONT */
+.bold {
+  font-weight: bold;
+}
+</style>

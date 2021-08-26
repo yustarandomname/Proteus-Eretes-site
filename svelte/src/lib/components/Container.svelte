@@ -8,7 +8,7 @@
   export let header: string = "";
   export let footer: string = "";
   export let link: link = null;
-  export let links: [link] | []= [];
+  export let links: link[] = [];
 </script>
 
 <style>
