@@ -8,33 +8,38 @@
 		"2021-07-20": [
 			{from: 8, to: 10, by: "EJZ '20"},
 			{from: 11.5, to: 13, by: "EJZ '20"},
+		],
+		"2021-07-21": [
+			{from: 10, to: 13, by: "EJZ '20"},
+			{from: 16, to: 18.25, by: "EJZ '20"},
 		]
 	}
 
 	let slotHeight;
-	let mouseHoverSelected = false
 
 	let selectedSlot = {
 		date: "2021-07-20",
-		yPos: null,
 		from: null,
 		to: null,
 		by: "Heeren voortraining '20",
 		error: null,
 	}
 
-	function handleMousemove(event) {
-		const mouseY = event.clientY - event.target.getBoundingClientRect().top;
-	}
+	$: yPos = selectedSlot.from && (selectedSlot.from.split(":")[0] - 8) * slotHeight + selectedSlot.from.split(":")[1] / 60 * slotHeight
+	$: yHeight = selectedSlot.to && selectedSlot.from && (selectedSlot.to.split(":")[0] - 8) * slotHeight + selectedSlot.to.split(":")[1] / 60 * slotHeight - yPos
+	
 
 	function handleMouse(event) {
 		const mouseY = event.clientY - event.target.getBoundingClientRect().top;
-		const totalH = slotHeight * SLOTS;
-		const start = Math.floor(mouseY * 4 / slotHeight) / 4 + 8
+		const start = Math.floor(mouseY / slotHeight) + 8
+		const minutes = Math.floor(((mouseY % slotHeight) * 4) / slotHeight) * 15
 
-		selectedSlot.yPos = (Math.ceil(mouseY * 4 / slotHeight) / (SLOTS * 4)) * totalH
-		selectedSlot.from = start
-		selectedSlot.to = start + 2
+		const startDoubleDigit = start.toString().padStart(2, "0")
+		const endDoubleDigit = (start + 2).toString().padStart(2, "0")
+		const minutesDoubleDigit = minutes.toString().padStart(2, "0")
+		
+		selectedSlot.from = startDoubleDigit + ":" + minutesDoubleDigit
+		selectedSlot.to = endDoubleDigit + ":" + minutesDoubleDigit
 	}
 </script>
 
@@ -54,14 +59,27 @@
 	}
 
 	.timeSlots {
+		position: relative;
 		font-size:0.8em;
 		line-height: 2em;
 		text-align: right;
 		color: var(--light);
 	}
 
+	.timeSlots > div::before {
+		content: "";
+		position: absolute;
+		top: calc(50% - 1px);
+		left: 0;
+		background:var(--light);
+		opacity: 0.25;
+		height:1px;
+		width: calc(100% - 5.5em);
+	}
+
 	/* slots */
 	.slot {
+		background: white;
 		position: absolute;
     width: calc(100% - 6em);
     top: 0;
@@ -75,7 +93,7 @@
 	.slot > .by {font-size: 0.8em; color: var(--light)}
 	.slot > * {user-select: none}
 
-	.slot.selected { background: var(--primary); cursor: ns-resize }
+	.slot.selected { background: var(--primary); border-color:var(--primary); cursor: ns-resize; }
 	.slot.selected > * { color: white }
 
 	/* SELECT SLOT */
@@ -93,10 +111,15 @@
 	<h3>Afschrijven</h3>
 
 	<Input type="date" bind:value={selectedSlot.date} />
+
+	<MultiInput>
+		<Input type="time" bind:value={selectedSlot.from} />
+		<Input type="time" bind:value={selectedSlot.to} />
+	</MultiInput>
 	
 	<div class="timeSelect" >
 		<div class="timeSlots">
-				{#each new Array(15) as _,index}
+				{#each new Array(SLOTS) as _,index}
 					<div bind:clientHeight={slotHeight}>{index + 8}:00</div>
 				{/each}
 		</div>
@@ -105,8 +128,8 @@
 			{#if data[selectedSlot?.date]}
 				{#each data[selectedSlot.date] as slot}
 					<div class="slot" style="
-							top: calc(2em + {(slot.from - 8) * slotHeight}px - 1px);
-							height: calc({(slot.to - slot.from) * slotHeight}px - 0.5em - 2px)
+							top: calc(2em + {(slot.from - 8) * slotHeight}px - 4px);
+							height: calc({(slot.to - slot.from) * slotHeight}px - 0.5em - 3px)
 							">
 						<div class="time">{slot.from} - {slot.to}</div>
 						<div class="by">{slot.by}</div>
@@ -118,9 +141,10 @@
 		
 		<div class="selectSlotWindow" on:click={handleMouse} />
 		
-		{#if selectedSlot.from}
+		{#if yPos}
 			<div class="slot selected" style="
-				top:calc({selectedSlot.yPos}px + 1em);"
+				top:calc({yPos}px + 2em - 4px);
+				height: calc({yHeight}px - 0.5em - 3px)"
 					>
 				<div class="time">{selectedSlot.from} - {selectedSlot.to}</div>
 				<div class="by">{selectedSlot.by}</div>
@@ -129,12 +153,7 @@
 	</div>
 
 	<div class="console">
-		<div>date: {selectedSlot.date}</div>
 		<div>from: {selectedSlot.from}</div>
 		<div>to: {selectedSlot.to}</div>
-		<br>
-		<div>slot Height: {slotHeight}</div>	
-
-		<div>entered: {mouseHoverSelected}</div>
 	</div>
 </div>
