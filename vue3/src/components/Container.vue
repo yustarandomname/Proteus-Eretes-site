@@ -1,7 +1,9 @@
 <template>
-  <div class="container" :class="[header, footer]">
+  <div class="container" :class="[header, footer]" :data-header="header" :data-footer="footer">
+    <!-- LINK(S) -->
     <div v-if="link || links.length" class="positionLinks">
-      <div v-if="link.action" class="link">
+      <!-- LINK which either has an action or is a link -->
+      <div v-if="link.action" @click="() => runLink(link.action)" class="link">
         {{ link.title }}
       </div>
       <router-link v-else-if="link.href" class="link" :to="link.href">
@@ -9,8 +11,9 @@
       </router-link>
     </div>
 
+    <!-- LINKS which is an Array of LINK -->
     <div v-for="link in links" :key="link">
-      <div v-if="link.action" class="link">
+      <div v-if="link.action" @click="runLink(link.action)" class="link">
         {{ link.title }}
       </div>
       <router-link v-else-if="link.href" class="link" :to="link.href">
@@ -18,12 +21,13 @@
       </router-link>
     </div>
 
+    <!-- CONTENT -->
     <slot />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue } from "vue-class-component";
+import { defineComponent, toRefs } from "vue";
 
 interface Link {
   title: string;
@@ -31,12 +35,22 @@ interface Link {
   href?: string;
 }
 
-export default class Container extends Vue {
-  header!: string;
-  footer!: string;
-  link?: Link = undefined;
-  links: Link[] = [];
-}
+export default defineComponent({
+  props: {
+    header: String,
+    footer: String,
+    link: Object as () => Link,
+    links: Array as () => Link[],
+  },
+  setup(props) {
+    const refs = toRefs(props);
+
+    // run the link action
+    const runLink = (action: () => void) => action();
+
+    return { ...refs, runLink };
+  },
+});
 </script>
 
 <style scoped>

@@ -1,19 +1,25 @@
 <template>
   <div class="home">
-    <Container>test</Container>
+    <Image :style="imageStyle" src="/logo.png" alt="logo" />
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import Container from "@/components/Container.vue"
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { defineComponent } from "vue";
+import Image from "@/components/Image.vue";
 
-@Options({
+export default defineComponent({
   components: {
-    HelloWorld,
-    Container
+    Image,
   },
-})
-export default class Home extends Vue {}
+  setup() {
+    const log = (x: any) => console.log(x);
+
+    const imageStyle = {
+      "--size": "contain",
+    };
+
+    return { log, imageStyle };
+  },
+});
 </script>
