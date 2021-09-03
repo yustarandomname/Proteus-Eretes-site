@@ -1,31 +1,26 @@
 <template>
-  <div class="home">
-    <AsyncImage :style="imageStyle" :promise="getImage" dummySrc="/logo.png" alt="logo" />
-  </div>
+  <div class="home">home</div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import AsyncImage from "@/components/AsyncImage.vue";
+import { ref, inject } from "vue";
 
-export default defineComponent({
-  components: {
-    AsyncImage,
-  },
+export default {
   setup() {
-    const log = (x: string) => console.log(x);
+    const injectedUser = inject("user");
+    const test = ref("");
 
-    const imageStyle = {
-      "--size": "contain",
+    console.log(user);
+
+    const getInput = (e: Event) => {
+      test.value = (e.target as HTMLInputElement).value;
     };
 
-    const getImage = async (): Promise<string> => {
-      const response = await fetch("/logo.png");
-      const blob = await response.blob();
-      return URL.createObjectURL(blob);
+    return {
+      test,
+      user,
+      getInput,
     };
-
-    return { log, imageStyle, getImage };
   },
-});
+};
 </script>
