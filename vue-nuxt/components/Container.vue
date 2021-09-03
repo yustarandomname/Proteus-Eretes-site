@@ -60,7 +60,7 @@ export default {
   background: var(--background, --base);
   background-size: cover;
   border: var(--border, 1px solid var(--light));
-  border-radius: 0.75em;
+  border-radius: 0.5em;
   margin: var(--margin, 1em auto);
   padding: var(--padding, 0.75em);
   position: relative;
