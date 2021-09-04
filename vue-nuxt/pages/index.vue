@@ -16,13 +16,41 @@
       </form>
     </Popup>
 
-    <Container header="Hello world"> Hello user </Container>
+    <FotoContainer
+      src="https://proteus-eretes.nl/fotodir/9/9719466455379747209036022605006758121769484342551754858607478390_l.jpg"
+    />
 
-    <Icon name="close-circle-outline" />
+    <Grid header="Snelle links">
+      <GridItem title="Contact" icon="at-outline" link="./contact" />
+      <GridItem title="Info" icon="information-outline" link="./lid-worden" />
+      <GridItem title="Diensten" icon="videocam-outline" link="./diensten" />
+      <GridItem
+        title="Evenementen"
+        icon="ticket-outline"
+        link="./evenementen"
+      />
+    </Grid>
 
-    <button @click="logout">log out</button>
+    <!-- TODO: Partners -->
+    <Container
+      header="Partners"
+      link="{title:'Partners', internLink: './partners'}"
+    >
+      <h3>Hier komen alle partners naast elkaar te staan</h3>
+    </Container>
 
-    user: {{ userid }}
+    <!-- TODO: Nieuws -->
+    <Container header="Nieuws" :style="{ '--height': '15em' }">
+      <h3>Hier komt het laatste nieuws als infinite scrollable lijst</h3>
+    </Container>
+
+    <Container
+      :key="x"
+      v-for="x in new Array(10)"
+      :style="{ '--height': '15em' }"
+    >
+      <h3>Hier komt het laatste nieuws als infinite scrollable lijst</h3>
+    </Container>
   </div>
 </template>
 
@@ -58,7 +86,6 @@ export default {
           queries[key] = value
         })
 
-      console.log(this.$store)
       this.email = this.$store.getters['user/email']
       this.access_token = queries.access_token
     }

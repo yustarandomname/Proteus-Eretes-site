@@ -21,19 +21,21 @@
         >{{ link.title }}</a
       >
 
-      <div :key="link.title" v-each="link in links">
-        <div v-if="link.action" class="link">
-          {{ link.title }}
+      <div v-if="links.length">
+        <div :key="link.title" v-each="link in links">
+          <div v-if="link.action" class="link">
+            {{ link.title }}
+          </div>
+          <NuxtLink
+            v-else-if="link.internLink"
+            :to="link.internLink"
+            class="link"
+            >{{ link.title }}</NuxtLink
+          >
+          <a v-else-if="link.externLink" :href="link.externLink" class="link">{{
+            link.title
+          }}</a>
         </div>
-        <NuxtLink
-          v-else-if="link.internLink"
-          :to="link.internLink"
-          class="link"
-          >{{ link.title }}</NuxtLink
-        >
-        <a v-else-if="link.externLink" :href="link.externLink" class="link">{{
-          link.title
-        }}</a>
       </div>
     </div>
 
