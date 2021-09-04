@@ -7,12 +7,12 @@ export const mutations = {
     state.auth = supabase.auth.user()
   },
   set(state, user) {
-    if (user) {
-      state.auth = user;
-    }
+    state.auth = user;
   },
 }
 
 export const getters = {
   isLoggedIn: state => !!state.auth,
+  id: state => state.auth ? state.auth.id : null,
+  email: state => state.auth ? state.auth.email : null,
 }

@@ -1,21 +1,100 @@
 <template>
   <div>
-    <Nuxt-link to="/" class="logo"> </Nuxt-link>
+    <Nuxt-link to="/" class="logo" />
 
-    <nav>NAVIGATION</nav>
+    <nav v-if="isLoggedIn">
+      <div class="primary-color">zoeken</div>
+      <Nuxt-link to="/leden-panel">leden panel</Nuxt-link>
 
-    <Nuxt />
+      <div class="avatar">
+        <AsyncImage
+          :promise="getProfile"
+          alt="user profile"
+          class="avatar-img"
+        />
+      </div>
+    </nav>
+    <nav v-else>
+      <Nuxt-link to="/lid-worden" class="bold secondary-color">
+        lid worden
+      </Nuxt-link>
+      <div class="primary-color" @click="toggleLogin">log in</div>
+    </nav>
+
+    <Popup :visible="loginVisible" @close="toggleLogin">
+      <h1>Login</h1>
+
+      <form @submit.prevent="login">
+        <Input v-model="email" type="email" />
+        <Input v-model="password" type="password" />
+        <Input type="submit" value="Login" />
+        <div class="link light-color" @click="resetPassword">
+          wachtwoord vergeten
+        </div>
+        <div v-if="error">{{ error }}</div>
+      </form>
+    </Popup>
+
+    <div class="wrapper">
+      <Nuxt />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      loginVisible: false,
+      email: '',
+      password: '',
+      error: '',
+    }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters['user/isLoggedIn']
+    },
+  },
   mounted() {
     this.$store.commit('user/init', this.$supabase)
 
     this.$supabase.auth.onAuthStateChange((_, session) => {
-      this.$store.commit('user/set', session.user)
+      this.$store.commit('user/set', session?.user)
     })
+  },
+  methods: {
+    async getProfile() {
+      const { data, error } = await this.$supabase.storage
+        .from('profiles')
+        .download(`${this.$store.getters['user/id']}.jpg`)
+
+      if (error) return './assets/dummyfoto.jpg'
+
+      return URL.createObjectURL(data)
+    },
+    toggleLogin() {
+      this.loginVisible = !this.loginVisible
+    },
+    async login() {
+      const { error } = await this.$supabase.auth.signIn({
+        email: this.email,
+        password: this.password,
+      })
+
+      if (error) this.error = error.message
+      else {
+        this.error = ''
+        this.loginVisible = false
+      }
+    },
+    resetPassword() {
+      const { error } = this.$supabase.auth.api.resetPasswordForEmail(
+        this.email
+      )
+      this.error = error?.message || `Email verstuurd naar ${this.email}`
+      // TODO: send notification
+    },
   },
 }
 </script>
@@ -65,6 +144,12 @@ nav > * {
   border-radius: 50%;
   margin: 0em !important;
 }
+
+.avatar-img {
+  --height: 2em;
+  --width: 2em;
+}
+
 @media screen and (max-width: 600px) {
   .logo {
     background: url(~/assets/proteuslogo-mobile.png);
